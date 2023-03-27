@@ -11,9 +11,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-const (
-	MONGO_DB_USER = "MONGODB_USER_DB"
-)
 
 func (ur *userRepository) CreateUser(userDomain model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr) {
 	logger.Info("Init create user repository.")
@@ -22,7 +19,7 @@ func (ur *userRepository) CreateUser(userDomain model.UserDomainInterface) (mode
 	value := converter.ConverterDomainToEntity(userDomain)
 
 	result, err := collection.InsertOne(context.Background(), value)
-	if err != nil { 
+	if err != nil {
 		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 

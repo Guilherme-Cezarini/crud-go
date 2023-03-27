@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"fmt"
 
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/logger"
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/validation"
@@ -41,6 +42,7 @@ func (uc *userControllerInterface) Insert(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(domainResult)
 	logger.Info("User created success.")
 	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
 		domainResult,

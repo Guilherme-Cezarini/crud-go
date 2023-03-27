@@ -15,6 +15,6 @@ func ConverterEntityToDomain(
 		entity.Age,
 	)
 
-	domain.SetID(entity.ID.String())
+	domain.SetID(entity.ID.Hex())
 	return domain
 }

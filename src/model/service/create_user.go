@@ -15,7 +15,7 @@ func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (m
 	if err != nil {
 		return nil, rest_err.NewInternalServerError(err.Error())
 	}
-
+	
 	fmt.Println(userDomain.GetPassword())
 	return userDomainRepository, nil
 }
