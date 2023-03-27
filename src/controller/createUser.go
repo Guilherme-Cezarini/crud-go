@@ -7,7 +7,7 @@ import (
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/validation"
 	"github.com/Guilherme-Cezarini/crud-go/src/controller/model/request"
 	"github.com/Guilherme-Cezarini/crud-go/src/model"
-	"github.com/Guilherme-Cezarini/crud-go/src/model/service"
+	"github.com/Guilherme-Cezarini/crud-go/src/view"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +15,7 @@ var (
 	UserDomainInterface model.UserDomainInterface
 )
 
-func Insert(c *gin.Context) {
+func (uc *userControllerInterface) Insert(c *gin.Context) {
 	logger.Info("Init createUser Controller.")
 	var userResquet request.UserRequest
 
@@ -34,15 +34,16 @@ func Insert(c *gin.Context) {
 		userResquet.Age,
 	)
 
-	service := service.NewUserDomainService()
-
-	if err := service.CreateUser(domain); err != nil {
+	domainResult, err := uc.serviceInterace.CreateUser(domain)
+	if err != nil {
 		c.JSON(err.Code, err)
 		logger.Error("Error trying to create user.", err)
 		return
 	}
 
 	logger.Info("User created success.")
-	c.String(http.StatusOK, "")
+	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
+		domainResult,
+	))
 
 }
