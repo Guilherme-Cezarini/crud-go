@@ -11,13 +11,6 @@ import (
 
 )
 
-<<<<<<< Updated upstream
-func FindUserById(c *gin.Context) {
-
-}
-
-func FindUserByEmail(c *gin.Context) {
-=======
 func (uc *userControllerInterface) FindUserById(c *gin.Context) {
 	logger.Info("Init FondeUserById controller.")
 
@@ -71,7 +64,6 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
 		userDomain,
 	))
->>>>>>> Stashed changes
 
 	logger.Info("FindUserByEmail success.")
 }
