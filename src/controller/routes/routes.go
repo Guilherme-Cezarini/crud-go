@@ -6,6 +6,7 @@ import (
 )
 
 func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
+	r.POST("/login", userController.Login)
 	r.GET("/getUserById/:userId", userController.FindUserById)
 	r.GET("/getUserByEmail/:userEmail", userController.FindUserByEmail)
 	r.POST("/create", userController.Insert)

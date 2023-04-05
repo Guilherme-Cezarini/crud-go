@@ -8,7 +8,7 @@ import (
 )
 
 func (ud *userDomainService) UpdateUser(userId string, userDomain model.UserDomainInterface) *rest_err.RestErr {
-
+	
 	logger.Info("Init updateUser model")
 	userDomain.EncryptPassword()
 	err := ud.userRepository.UpdateUser(userId, userDomain)

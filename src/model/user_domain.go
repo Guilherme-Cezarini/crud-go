@@ -45,6 +45,15 @@ func NewUserDomain(
 	}
 }
 
+func NewUserLoginDomain(
+	email, password string,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+	}
+}
+
 func NewUserUpdateDomain(
 	email, password, name string,
 	age int8,
