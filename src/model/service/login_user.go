@@ -21,7 +21,7 @@ func (ud *userDomainService) LoginUserServices(userDomain model.UserDomainInterf
 	if err != nil {
 		return nil, err
 	}
-
+	
 	logger.Info("loginUser service executed successfully")
 	return user, nil
 }

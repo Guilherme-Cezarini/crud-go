@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/logger"
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/rest_err"
@@ -16,6 +15,5 @@ func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (m
 		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 	
-	fmt.Println(userDomain.GetPassword())
 	return userDomainRepository, nil
 }

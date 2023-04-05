@@ -3,6 +3,7 @@ package controller
 
 import(
 	"net/http"
+	"os"
 
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/logger"
 	"github.com/Guilherme-Cezarini/crud-go/src/configuration/validation"
@@ -24,13 +25,17 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 		return
 	}
 
+	tokenDomain := model.NewTokenDomain(
+		os.Getenv("BEARER_TOKEN"),
+	)
+
 	domain := model.NewUserLoginDomain(
 		userRequest.Email,
 		userRequest.Password,
 	)
 
 
-	domainResult, err := uc.serviceInterace.LoginUserServices(domain)
+	_, err := uc.serviceInterace.LoginUserServices(domain)
 	if err != nil {
 		logger.Info("Error trying to call loginUser service")
 		c.JSON(err.Code, err)
@@ -39,7 +44,7 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 
 	logger.Info("loginUser controller executed successfully")
 
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
-		domainResult,
+	c.JSON(http.StatusOK, view.ConvertDomainTokenToResponse(
+		tokenDomain,
 	))
 }

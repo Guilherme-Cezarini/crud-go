@@ -25,14 +25,6 @@ type userDomain struct {
 	age      int8
 }
 
-func (ud *userDomain) SetID(id string) {
-	ud.id = id
-}
-
-func (ud *userDomain) GetID() string {
-	return ud.id
-}
-
 func NewUserDomain(
 	email, password, name string,
 	age int8,
@@ -64,6 +56,14 @@ func NewUserUpdateDomain(
 		name:     name,
 		age:      age,
 	}
+}
+
+func (ud *userDomain) SetID(id string) {
+	ud.id = id
+}
+
+func (ud *userDomain) GetID() string {
+	return ud.id
 }
 
 func (ud *userDomain) GetName() string {
