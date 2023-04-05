@@ -45,6 +45,18 @@ func NewUserDomain(
 	}
 }
 
+func NewUserUpdateDomain(
+	email, password, name string,
+	age int8,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+		name:     name,
+		age:      age,
+	}
+}
+
 func (ud *userDomain) GetName() string {
 	return ud.name
 }

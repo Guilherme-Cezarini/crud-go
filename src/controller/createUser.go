@@ -30,8 +30,8 @@ func (uc *userControllerInterface) Insert(c *gin.Context) {
 
 	domain := model.NewUserDomain(
 		userResquet.Email,
-		userResquet.Name,
 		userResquet.Passowrd,
+		userResquet.Name,
 		userResquet.Age,
 	)
 

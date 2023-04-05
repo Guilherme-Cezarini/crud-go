@@ -15,7 +15,7 @@ import (
 
 func (uc *userControllerInterface) Update(c *gin.Context) {
 
-	logger.Info("Init createUser Controller.")
+	logger.Info("Init Update Controller.")
 	var userResquet request.UserUpdateRequest
 	
 	userId := c.Param("userId")
@@ -32,10 +32,10 @@ func (uc *userControllerInterface) Update(c *gin.Context) {
 		return
 	}
 
-	domain := model.NewUserDomain(
+	domain := model.NewUserUpdateDomain(
 		userResquet.Email,
-		userResquet.Name,
 		userResquet.Passowrd,
+		userResquet.Name,
 		userResquet.Age,
 	)
 
