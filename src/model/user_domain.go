@@ -1,8 +1,8 @@
 package model
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"golang.org/x/crypto/bcrypt"
+	"fmt"
 )
 
 type UserDomainInterface interface {
@@ -15,6 +15,7 @@ type UserDomainInterface interface {
 	SetID(string)
 
 	EncryptPassword()
+	CheckPasswordHash(string, string) bool
 }
 
 type userDomain struct {
@@ -23,14 +24,6 @@ type userDomain struct {
 	password string
 	name     string
 	age      int8
-}
-
-func (ud *userDomain) SetID(id string) {
-	ud.id = id
-}
-
-func (ud *userDomain) GetID() string {
-	return ud.id
 }
 
 func NewUserDomain(
@@ -43,6 +36,35 @@ func NewUserDomain(
 		name:     name,
 		age:      age,
 	}
+}
+
+func NewUserLoginDomain(
+	email, password string,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+	}
+}
+
+func NewUserUpdateDomain(
+	email, password, name string,
+	age int8,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+		name:     name,
+		age:      age,
+	}
+}
+
+func (ud *userDomain) SetID(id string) {
+	ud.id = id
+}
+
+func (ud *userDomain) GetID() string {
+	return ud.id
 }
 
 func (ud *userDomain) GetName() string {
@@ -62,8 +84,14 @@ func (ud *userDomain) GetAge() int8 {
 }
 
 func (ud *userDomain) EncryptPassword() {
-	hash := md5.New()
-	defer hash.Reset()
-	hash.Write([]byte(ud.password))
-	ud.password = hex.EncodeToString(hash.Sum(nil))
+	bytes, _ := bcrypt.GenerateFromPassword([]byte(ud.password), 14)
+	ud.password = string(bytes)
 }
+
+func (ud *userDomain) CheckPasswordHash(password, hash string) bool {
+	message := fmt.Sprintf("password: %v - hash: %v", password, hash)
+	fmt.Println(message)
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+}
+

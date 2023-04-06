@@ -15,7 +15,7 @@ type UserControllerInterface interface {
 	Update(c *gin.Context)
 	Insert(c *gin.Context)
 	Delete(c *gin.Context)
-
+	Login(c *gin.Context)
 	FindUserById(c *gin.Context)
 	FindUserByEmail(c *gin.Context)
 }
