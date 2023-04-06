@@ -25,10 +25,6 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 		return
 	}
 
-	tokenDomain := model.NewTokenDomain(
-		os.Getenv("BEARER_TOKEN"),
-	)
-
 	domain := model.NewUserLoginDomain(
 		userRequest.Email,
 		userRequest.Password,
@@ -41,6 +37,10 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
+
+	tokenDomain := model.NewTokenDomain(
+		os.Getenv("BEARER_TOKEN"),
+	)
 
 	logger.Info("loginUser controller executed successfully")
 

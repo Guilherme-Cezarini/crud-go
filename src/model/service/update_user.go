@@ -10,7 +10,11 @@ import (
 func (ud *userDomainService) UpdateUser(userId string, userDomain model.UserDomainInterface) *rest_err.RestErr {
 	
 	logger.Info("Init updateUser model")
-	userDomain.EncryptPassword()
+	
+	if(userDomain.GetPassword() != ""){
+		userDomain.EncryptPassword()
+	}
+	
 	err := ud.userRepository.UpdateUser(userId, userDomain)
 	if err != nil {
 		return rest_err.NewInternalServerError(err.Error())

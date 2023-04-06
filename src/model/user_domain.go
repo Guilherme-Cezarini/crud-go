@@ -1,8 +1,8 @@
 package model
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"golang.org/x/crypto/bcrypt"
+	"fmt"
 )
 
 type UserDomainInterface interface {
@@ -15,6 +15,7 @@ type UserDomainInterface interface {
 	SetID(string)
 
 	EncryptPassword()
+	CheckPasswordHash(string, string) bool
 }
 
 type userDomain struct {
@@ -83,8 +84,14 @@ func (ud *userDomain) GetAge() int8 {
 }
 
 func (ud *userDomain) EncryptPassword() {
-	hash := md5.New()
-	defer hash.Reset()
-	hash.Write([]byte(ud.password))
-	ud.password = hex.EncodeToString(hash.Sum(nil))
+	bytes, _ := bcrypt.GenerateFromPassword([]byte(ud.password), 14)
+	ud.password = string(bytes)
 }
+
+func (ud *userDomain) CheckPasswordHash(password, hash string) bool {
+	message := fmt.Sprintf("password: %v - hash: %v", password, hash)
+	fmt.Println(message)
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+}
+
